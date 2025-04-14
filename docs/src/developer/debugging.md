@@ -1,4 +1,3 @@
-# Debugging StarlingMonkey application 
- 
-TODO
+# Debugging StarlingMonkey application
 
+TODO
