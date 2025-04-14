@@ -297,17 +297,16 @@ void initialize_builtins(api::Engine *engine) {
 
 ## Providing a custom host API implementation
 
-The [host-apis][host-api] directory can contain implementations of the host API for
-different versions of WASI—or in theory any other host interface. Those can be selected by setting
-the `HOST_API` environment variable to the name of one of the directories. Currently, only an
+The [host-apis][host-api] directory can contain implementations of the host API for different
+versions of WASI—or in theory any other host interface. Those can be selected by setting the
+`HOST_API` environment variable to the name of one of the directories. Currently, only an
 implementation in terms of [wasi-0.2.0][wasi-api] is provided, and used by default.
 
 To provide a custom host API implementation, you can set `HOST_API` to the (absolute) path of a
 directory containing that implementation.
 
-[host-api]: ../../../../host-apis 
+[host-api]: ../../../../host-apis
 [wasi-api]: ../../../../host-apis/wasi-0.2.0
-
 [spidermonkey-rooting]:
   https://github.com/mozilla-spidermonkey/spidermonkey-embedding-examples/blob/next/docs/GC%20Rooting%20Guide.md
 [spidermonkey-jsapi]:

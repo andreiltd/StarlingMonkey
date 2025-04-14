@@ -111,5 +111,5 @@ executed, and can e.g. register a handler for the `fetch` event to serve HTTP re
 
 [cmake]: https://cmake.org/
 [gh-pages]: https://bytecodealliance.github.io/StarlingMonkey/
-[spidermonkey]: https://spidermonkey.dev/ 
+[spidermonkey]: https://spidermonkey.dev/
 [wasm-component]: https://component-model.bytecodealliance.org/

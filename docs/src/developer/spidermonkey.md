@@ -1,8 +1,8 @@
 # Developing Changes to SpiderMonkey
 
 StarlingMonkey uses SpiderMonkey as its underlying JS engine, and by default, downloads build
-artifacts from [a wrapper repository](wasi-embedding) around
-[our local SpiderMonkey tree](geck-dev). That wrapper repository contains a SpiderMonkey commit-hash
+artifacts from [a wrapper repository][wasi-embedding] around
+[our local SpiderMonkey tree][geck-dev]. That wrapper repository contains a SpiderMonkey commit-hash
 in a file, and its CI jobs build the artifacts that StarlingMonkey downloads during its build.
 
 This flow is optimized for ease of development of StarlingMonkey, and avoiding the need to build
