@@ -195,17 +195,17 @@ dependencies. To properly manage the Rust toolchain, the build script expects
 <ol>
 <li>Clone the repo</li>
 </ol>
-<pre><code class="language-bash">git clone https://github.com/bytecodealliance/StarlingMonkey
-cd StarlingMonkey
+<pre><code class="language-bash">$ git clone https://github.com/bytecodealliance/StarlingMonkey
+$ cd StarlingMonkey
 </code></pre>
 <ol start="2">
 <li>Run the configuration script</li>
 </ol>
 <p>For a release configuration, run</p>
-<pre><code class="language-bash">cmake -S . -B cmake-build-release -DCMAKE_BUILD_TYPE=Release
+<pre><code class="language-bash">$ cmake -S . -B cmake-build-release -DCMAKE_BUILD_TYPE=Release
 </code></pre>
 <p>For a debug configuration, run</p>
-<pre><code class="language-bash">cmake -S . -B cmake-build-debug -DCMAKE_BUILD_TYPE=Debug
+<pre><code class="language-bash">$ cmake -S . -B cmake-build-debug -DCMAKE_BUILD_TYPE=Debug
 </code></pre>
 <ol start="3">
 <li>Build the runtime</li>
@@ -217,20 +217,20 @@ using the <code>componentize.sh</code> script.</p>
 directory:</p>
 <pre><code class="language-bash"># Use cmake-build-debug for the debug build
 # Change the value for `--parallel` to match the number of CPU cores in your system
-cmake --build cmake-build-release --parallel 8
+$ cmake --build cmake-build-release --parallel 8
 </code></pre>
 <p>Then, the <code>starling-raw.wasm</code> module can be turned into a component with the following command:</p>
-<pre><code class="language-bash">cd cmake-build-release
-./componentize.sh -o starling.wasm
+<pre><code class="language-bash">$ cd cmake-build-release
+$ ./componentize.sh -o starling.wasm
 </code></pre>
 <p>The resulting runtime can be used to load and evaluate JS code dynamically:</p>
-<pre><code class="language-bash">wasmtime -S http starling.wasm -e "console.log('hello world')"
+<pre><code class="language-bash">$ wasmtime -S http starling.wasm -e "console.log('hello world')"
 # or, to load a file:
-wasmtime -S http --dir . starling.wasm index.js
+$ wasmtime -S http --dir . starling.wasm index.js
 </code></pre>
 <p>Alternatively, a JS file can be provided during componentization:</p>
-<pre><code class="language-bash">cd cmake-build-release
-./componentize.sh index.js -o starling.wasm
+<pre><code class="language-bash">$ cd cmake-build-release
+$ ./componentize.sh index.js -o starling.wasm
 </code></pre>
 <p>This way, the JS file will be loaded during componentization, and the top-level code will be
 executed, and can e.g. register a handler for the <code>fetch</code> event to serve HTTP requests.</p>
@@ -338,20 +338,20 @@ install just, you can use the command <code>cargo install just</code> or <code>c
 refer to the official <a href="https://github.com/casey/just?tab=readme-ov-file#installation">installation instructions</a> for your specific system.</p>
 <p>Once installed, navigate to the project directory and run <code>just</code> commands as needed. For instance,
 the following commands will configure a default <code>cmake-build-debug</code> directory and build the project.</p>
-<pre><code class="language-shell">just build
+<pre><code class="language-shell">$ just build
 </code></pre>
 <p>To load a JS script during componentization and serve its output using <code>Wasmtime</code>, run:</p>
-<pre><code class="language-shell">just serve &lt;filename&gt;.js
+<pre><code class="language-shell">$ just serve &lt;filename&gt;.js
 </code></pre>
 <p>To build and run integration tests run:</p>
-<pre><code class="language-shell">just test
+<pre><code class="language-shell">$ just test
 </code></pre>
 <p>To build and run Web Platform Tests run:</p>
-<pre><code class="language-shell">just wpt-test # run all tests
-just wpt-test console/console-log-symbol.any.js # run specific test
+<pre><code class="language-shell">$ just wpt-test # run all tests
+$ just wpt-test console/console-log-symbol.any.js # run specific test
 </code></pre>
 <p>To view a complete list of available recipes, run:</p>
-<pre><code class="language-shell">just --list
+<pre><code class="language-shell">$ just --list
 
 </code></pre>
 <blockquote>
@@ -373,22 +373,22 @@ existing build directory.</li>
 <p>The default build mode is debug, which automatically configures the build directory to
 <code>cmake-build-debug</code>. You can switch to a different build mode, such as release, by specifying the
 mode parameter. For example:</p>
-<pre><code class="language-shell">just mode=release build
+<pre><code class="language-shell">$ just mode=release build
 </code></pre>
 <p>This command will set the build mode to release, and the build directory will automatically change
 to <code>cmake-build-release</code>.</p>
 <p>If you want to override the default build directory, you can use the <code>builddir</code> parameter.</p>
-<pre><code class="language-shell">just builddir=mybuilddir mode=release build
+<pre><code class="language-shell">$ just builddir=mybuilddir mode=release build
 </code></pre>
 <p>This command configures CMake to use <code>mybuilddir</code> as the build directory and sets the build mode to
 <code>release</code>.</p>
 <h2 id="starting-the-wpt-server"><a class="header" href="#starting-the-wpt-server">Starting the WPT Server</a></h2>
 <p>You can also start a Web Platform Tests (WPT) server with:</p>
-<pre><code class="language-shell">just wpt-server
+<pre><code class="language-shell">$ just wpt-server
 </code></pre>
 <p>After starting the server, individual tests can be run by sending a request with the test name to
 the server instance. For example:</p>
-<pre><code class="language-shell">curl http://127.0.0.1:7676/console/console-log-symbol.any.js
+<pre><code class="language-shell">$ curl http://127.0.0.1:7676/console/console-log-symbol.any.js
 
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="devoloping-builtins-in-c"><a class="header" href="#devoloping-builtins-in-c">Devoloping builtins in C++</a></h1>
@@ -464,12 +464,9 @@ We'll use the following JavaScript class as an example:</p>
   }
 }
 </code></pre>
-<ul>
-<li>Step 1: Define the Header File (<code>ma_class.h</code>)</li>
-</ul>
+<h4 id="step-1-define-the-header-file-my_classh"><a class="header" href="#step-1-define-the-header-file-my_classh">Step 1: Define the Header File (<code>my_class.h</code>)</a></h4>
 <p>Create a header file to declare the native class and its methods/properties.</p>
-<pre><code class="language-cpp">
-#ifndef BUILTINS_MY_CLASS_H
+<pre><code class="language-cpp">#ifndef BUILTINS_MY_CLASS_H
 #define BUILTINS_MY_CLASS_H
 
 #include "builtin.h"
@@ -507,11 +504,9 @@ bool install(api::Engine *engine);
 } // namespace builtins
 
 #endif // BUILTINS_MY_CLASS_H
-
-- Step 2: Implement the Class (`my_class.cpp`)
-
-```cpp
-#include "my_class.h"
+</code></pre>
+<h4 id="step-2-implement-the-class-my_classcpp"><a class="header" href="#step-2-implement-the-class-my_classcpp">Step 2: Implement the Class (<code>my_class.cpp</code>)</a></h4>
+<pre><code class="language-cpp">#include "my_class.h"
 
 namespace builtins {
 namespace my_class {
@@ -612,7 +607,7 @@ bool install(api::Engine *engine) {
 </code></pre>
 <p>Deriving from <code>BuiltinImpl</code> automatically creates a <code>JSClass</code> definition using parameters provided
 by the implementation:</p>
-<h4 id="explanation-of-starlingmonkey-api-usage"><a class="header" href="#explanation-of-starlingmonkey-api-usage">Explanation of StarlingMonkey API Usage</a></h4>
+<h5 id="explanation-of-starlingmonkey-api-usage"><a class="header" href="#explanation-of-starlingmonkey-api-usage">Explanation of StarlingMonkey API Usage</a></h5>
 <pre><code class="language-cpp">static constexpr JSClass class_{
     Impl::class_name,
     JSCLASS_HAS_RESERVED_SLOTS(static_cast&lt;uint32_t&gt;(Impl::Slots::Count)) | class_flags,
@@ -655,8 +650,8 @@ by the implementation:</p>
 <li>
 <p><code>is_instance(JSObject *obj)</code>:</p>
 <ul>
-<li>used to verify if object passed is instance of builtin class.</li>
-<li>used often as assertion in class methods, for example:
+<li>Used to verify if object passed is instance of builtin class.</li>
+<li>Used often as assertion in class methods, for example:
 <pre><code class="language-cpp">JSString *MyObject::my_method(JSObject *self) {
   MOZ_ASSERT(is_instance(self));
   return JS::GetReservedSlot(self, Slots::MySlot).toString();
@@ -664,13 +659,9 @@ by the implementation:</p>
 </code></pre>
 </li>
 </ul>
-<pre><code>
-</code></pre>
-</li>
-<li>
-<p>Step 3: Register the Class with StarlingMonkey Engine</p>
 </li>
 </ul>
+<h4 id="step-3-register-the-class-with-starlingmonkey-engine"><a class="header" href="#step-3-register-the-class-with-starlingmonkey-engine">Step 3: Register the Class with StarlingMonkey Engine</a></h4>
 <p>Finally, ensure your class is installed into the StarlingMonkey engine during initialization:</p>
 <pre><code class="language-cpp">// Example initialization code
 #include "my_class.h"
@@ -700,26 +691,26 @@ sometimes it is necessary or desirable to make modifications to SpiderMonkey dir
 make fixes or optimize performance.</p>
 <p>In order to do so, first clone the above two repositories, with <code>gecko-dev</code> (SpiderMonkey itself) as
 a subdirectory to <code>spidermonkey-wasi-embedding</code>:</p>
-<pre><code class="language-shell">git clone https://github.com/bytecodealliance/spidermonkey-wasi-embedding
-cd spidermonkey-wasi-embedding/
-git clone https://github.com/bytecodealliance/gecko-dev
+<pre><code class="language-shell">$ git clone https://github.com/bytecodealliance/spidermonkey-wasi-embedding
+$ cd spidermonkey-wasi-embedding/
+$ git clone https://github.com/bytecodealliance/gecko-dev
 </code></pre>
 <p>and switch to the commit that we are currently using:</p>
-<pre><code class="language-shell">git checkout `cat ../gecko-revision`
+<pre><code class="language-shell">$ git checkout `cat ../gecko-revision`
 # now edit the source
 </code></pre>
 <p>Then make changes as necessary, eventually rebuilding from the <code>spidermonkey-wasi-embedding</code> root:</p>
 <pre><code class="language-shell">cd ../ # back to spidermonkey-wasi-embedding
-./rebuild.sh release
+$ ./rebuild.sh release
 </code></pre>
 <p>This will produce a <code>release/</code> directory with artifacts of the same form normally downloaded by
 StarlingMonkey. So, finally, from within StarlingMonkey, set an environment variable
 <code>SPIDERMONKEY_BINARIES</code>:</p>
-<pre><code class="language-shell">export SPIDERMONKEY_BINARIES=/path/to/spidermonkey-wasi-embedding/release
-cmake -S . -B cmake-build-release -DCMAKE_BUILD_TYPE=Release
-cmake --build cmake-build-release --parallel 8
+<pre><code class="language-shell">$ export SPIDERMONKEY_BINARIES=/path/to/spidermonkey-wasi-embedding/release
+$ cmake -S . -B cmake-build-release -DCMAKE_BUILD_TYPE=Release
+$ cmake --build cmake-build-release --parallel 8
 </code></pre>
-<p>and use/test as above.</p>
+<p>and use/test as described in <a href="developer/../getting/started/tesing.html">testing</a> section.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="debugging-starlingmonkey-application"><a class="header" href="#debugging-starlingmonkey-application">Debugging StarlingMonkey application</a></h1>
 <p>TODO</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="community"><a class="header" href="#community">Community</a></h1>

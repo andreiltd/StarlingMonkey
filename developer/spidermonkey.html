@@ -166,26 +166,26 @@ sometimes it is necessary or desirable to make modifications to SpiderMonkey dir
 make fixes or optimize performance.</p>
 <p>In order to do so, first clone the above two repositories, with <code>gecko-dev</code> (SpiderMonkey itself) as
 a subdirectory to <code>spidermonkey-wasi-embedding</code>:</p>
-<pre><code class="language-shell">git clone https://github.com/bytecodealliance/spidermonkey-wasi-embedding
-cd spidermonkey-wasi-embedding/
-git clone https://github.com/bytecodealliance/gecko-dev
+<pre><code class="language-shell">$ git clone https://github.com/bytecodealliance/spidermonkey-wasi-embedding
+$ cd spidermonkey-wasi-embedding/
+$ git clone https://github.com/bytecodealliance/gecko-dev
 </code></pre>
 <p>and switch to the commit that we are currently using:</p>
-<pre><code class="language-shell">git checkout `cat ../gecko-revision`
+<pre><code class="language-shell">$ git checkout `cat ../gecko-revision`
 # now edit the source
 </code></pre>
 <p>Then make changes as necessary, eventually rebuilding from the <code>spidermonkey-wasi-embedding</code> root:</p>
 <pre><code class="language-shell">cd ../ # back to spidermonkey-wasi-embedding
-./rebuild.sh release
+$ ./rebuild.sh release
 </code></pre>
 <p>This will produce a <code>release/</code> directory with artifacts of the same form normally downloaded by
 StarlingMonkey. So, finally, from within StarlingMonkey, set an environment variable
 <code>SPIDERMONKEY_BINARIES</code>:</p>
-<pre><code class="language-shell">export SPIDERMONKEY_BINARIES=/path/to/spidermonkey-wasi-embedding/release
-cmake -S . -B cmake-build-release -DCMAKE_BUILD_TYPE=Release
-cmake --build cmake-build-release --parallel 8
+<pre><code class="language-shell">$ export SPIDERMONKEY_BINARIES=/path/to/spidermonkey-wasi-embedding/release
+$ cmake -S . -B cmake-build-release -DCMAKE_BUILD_TYPE=Release
+$ cmake --build cmake-build-release --parallel 8
 </code></pre>
-<p>and use/test as above.</p>
+<p>and use/test as described in <a href="../getting/started/tesing.html">testing</a> section.</p>
 
                     </main>
 

@@ -194,17 +194,17 @@ dependencies. To properly manage the Rust toolchain, the build script expects
 <ol>
 <li>Clone the repo</li>
 </ol>
-<pre><code class="language-bash">git clone https://github.com/bytecodealliance/StarlingMonkey
-cd StarlingMonkey
+<pre><code class="language-bash">$ git clone https://github.com/bytecodealliance/StarlingMonkey
+$ cd StarlingMonkey
 </code></pre>
 <ol start="2">
 <li>Run the configuration script</li>
 </ol>
 <p>For a release configuration, run</p>
-<pre><code class="language-bash">cmake -S . -B cmake-build-release -DCMAKE_BUILD_TYPE=Release
+<pre><code class="language-bash">$ cmake -S . -B cmake-build-release -DCMAKE_BUILD_TYPE=Release
 </code></pre>
 <p>For a debug configuration, run</p>
-<pre><code class="language-bash">cmake -S . -B cmake-build-debug -DCMAKE_BUILD_TYPE=Debug
+<pre><code class="language-bash">$ cmake -S . -B cmake-build-debug -DCMAKE_BUILD_TYPE=Debug
 </code></pre>
 <ol start="3">
 <li>Build the runtime</li>
@@ -216,20 +216,20 @@ using the <code>componentize.sh</code> script.</p>
 directory:</p>
 <pre><code class="language-bash"># Use cmake-build-debug for the debug build
 # Change the value for `--parallel` to match the number of CPU cores in your system
-cmake --build cmake-build-release --parallel 8
+$ cmake --build cmake-build-release --parallel 8
 </code></pre>
 <p>Then, the <code>starling-raw.wasm</code> module can be turned into a component with the following command:</p>
-<pre><code class="language-bash">cd cmake-build-release
-./componentize.sh -o starling.wasm
+<pre><code class="language-bash">$ cd cmake-build-release
+$ ./componentize.sh -o starling.wasm
 </code></pre>
 <p>The resulting runtime can be used to load and evaluate JS code dynamically:</p>
-<pre><code class="language-bash">wasmtime -S http starling.wasm -e "console.log('hello world')"
+<pre><code class="language-bash">$ wasmtime -S http starling.wasm -e "console.log('hello world')"
 # or, to load a file:
-wasmtime -S http --dir . starling.wasm index.js
+$ wasmtime -S http --dir . starling.wasm index.js
 </code></pre>
 <p>Alternatively, a JS file can be provided during componentization:</p>
-<pre><code class="language-bash">cd cmake-build-release
-./componentize.sh index.js -o starling.wasm
+<pre><code class="language-bash">$ cd cmake-build-release
+$ ./componentize.sh index.js -o starling.wasm
 </code></pre>
 <p>This way, the JS file will be loaded during componentization, and the top-level code will be
 executed, and can e.g. register a handler for the <code>fetch</code> event to serve HTTP requests.</p>

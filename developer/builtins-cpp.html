@@ -228,12 +228,9 @@ We'll use the following JavaScript class as an example:</p>
   }
 }
 </code></pre>
-<ul>
-<li>Step 1: Define the Header File (<code>ma_class.h</code>)</li>
-</ul>
+<h4 id="step-1-define-the-header-file-my_classh"><a class="header" href="#step-1-define-the-header-file-my_classh">Step 1: Define the Header File (<code>my_class.h</code>)</a></h4>
 <p>Create a header file to declare the native class and its methods/properties.</p>
-<pre><code class="language-cpp">
-#ifndef BUILTINS_MY_CLASS_H
+<pre><code class="language-cpp">#ifndef BUILTINS_MY_CLASS_H
 #define BUILTINS_MY_CLASS_H
 
 #include "builtin.h"
@@ -271,11 +268,9 @@ bool install(api::Engine *engine);
 } // namespace builtins
 
 #endif // BUILTINS_MY_CLASS_H
-
-- Step 2: Implement the Class (`my_class.cpp`)
-
-```cpp
-#include "my_class.h"
+</code></pre>
+<h4 id="step-2-implement-the-class-my_classcpp"><a class="header" href="#step-2-implement-the-class-my_classcpp">Step 2: Implement the Class (<code>my_class.cpp</code>)</a></h4>
+<pre><code class="language-cpp">#include "my_class.h"
 
 namespace builtins {
 namespace my_class {
@@ -376,7 +371,7 @@ bool install(api::Engine *engine) {
 </code></pre>
 <p>Deriving from <code>BuiltinImpl</code> automatically creates a <code>JSClass</code> definition using parameters provided
 by the implementation:</p>
-<h4 id="explanation-of-starlingmonkey-api-usage"><a class="header" href="#explanation-of-starlingmonkey-api-usage">Explanation of StarlingMonkey API Usage</a></h4>
+<h5 id="explanation-of-starlingmonkey-api-usage"><a class="header" href="#explanation-of-starlingmonkey-api-usage">Explanation of StarlingMonkey API Usage</a></h5>
 <pre><code class="language-cpp">static constexpr JSClass class_{
     Impl::class_name,
     JSCLASS_HAS_RESERVED_SLOTS(static_cast&lt;uint32_t&gt;(Impl::Slots::Count)) | class_flags,
@@ -419,8 +414,8 @@ by the implementation:</p>
 <li>
 <p><code>is_instance(JSObject *obj)</code>:</p>
 <ul>
-<li>used to verify if object passed is instance of builtin class.</li>
-<li>used often as assertion in class methods, for example:
+<li>Used to verify if object passed is instance of builtin class.</li>
+<li>Used often as assertion in class methods, for example:
 <pre><code class="language-cpp">JSString *MyObject::my_method(JSObject *self) {
   MOZ_ASSERT(is_instance(self));
   return JS::GetReservedSlot(self, Slots::MySlot).toString();
@@ -428,13 +423,9 @@ by the implementation:</p>
 </code></pre>
 </li>
 </ul>
-<pre><code>
-</code></pre>
-</li>
-<li>
-<p>Step 3: Register the Class with StarlingMonkey Engine</p>
 </li>
 </ul>
+<h4 id="step-3-register-the-class-with-starlingmonkey-engine"><a class="header" href="#step-3-register-the-class-with-starlingmonkey-engine">Step 3: Register the Class with StarlingMonkey Engine</a></h4>
 <p>Finally, ensure your class is installed into the StarlingMonkey engine during initialization:</p>
 <pre><code class="language-cpp">// Example initialization code
 #include "my_class.h"
