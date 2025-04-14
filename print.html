@@ -669,9 +669,9 @@ void initialize_builtins(api::Engine *engine) {
 
 </code></pre>
 <h2 id="providing-a-custom-host-api-implementation"><a class="header" href="#providing-a-custom-host-api-implementation">Providing a custom host API implementation</a></h2>
-<p>The <a href="developer/../../../../host-apis">host-apis</a> directory can contain implementations of the host API for
-different versions of WASI—or in theory any other host interface. Those can be selected by setting
-the <code>HOST_API</code> environment variable to the name of one of the directories. Currently, only an
+<p>The <a href="developer/../../../../host-apis">host-apis</a> directory can contain implementations of the host API for different
+versions of WASI—or in theory any other host interface. Those can be selected by setting the
+<code>HOST_API</code> environment variable to the name of one of the directories. Currently, only an
 implementation in terms of <a href="developer/../../../../host-apis/wasi-0.2.0">wasi-0.2.0</a> is provided, and used by default.</p>
 <p>To provide a custom host API implementation, you can set <code>HOST_API</code> to the (absolute) path of a
 directory containing that implementation.</p>
@@ -679,8 +679,8 @@ directory containing that implementation.</p>
 <p>[TODO]</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="developing-changes-to-spidermonkey"><a class="header" href="#developing-changes-to-spidermonkey">Developing Changes to SpiderMonkey</a></h1>
 <p>StarlingMonkey uses SpiderMonkey as its underlying JS engine, and by default, downloads build
-artifacts from <a href="developer/wasi-embedding">a wrapper repository</a> around
-<a href="developer/geck-dev">our local SpiderMonkey tree</a>. That wrapper repository contains a SpiderMonkey commit-hash
+artifacts from <a href="https://github.com/bytecodealliance/spidermonkey-wasi-embedding">a wrapper repository</a> around
+<a href="https://github.com/bytecodealliance/gecko-dev">our local SpiderMonkey tree</a>. That wrapper repository contains a SpiderMonkey commit-hash
 in a file, and its CI jobs build the artifacts that StarlingMonkey downloads during its build.</p>
 <p>This flow is optimized for ease of development of StarlingMonkey, and avoiding the need to build
 SpiderMonkey locally, which requires some additional tools and is resource-intensive. However,
@@ -712,7 +712,7 @@ $ cmake --build cmake-build-release --parallel 8
 <p>TODO</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="community"><a class="header" href="#community">Community</a></h1>
 <h2 id="reaching-out"><a class="header" href="#reaching-out">Reaching out</a></h2>
-<p>Ask questions in the BytecodeAlliance Zullip <a href="resources/starlingmonkey">#StarlingMonkey</a> channel</p>
+<p>Ask questions in the BytecodeAlliance Zullip <a href="https://bytecodealliance.zulipchat.com/#narrow/channel/459697-StarlingMonkey">#StarlingMonkey</a> channel</p>
 <h2 id="code-of-conduct"><a class="header" href="#code-of-conduct">Code of Conduct</a></h2>
 <p>StarlingMonkey follows the <a href="resources/../CODE_OF_CONDUCT.html">BytecodeAlliance Code of Conduct</a>. We are
 committed to providing a welcoming and inclusive environment for all participants.</p>
