@@ -157,9 +157,9 @@
                     <main>
                         <h1 id="developing-changes-to-spidermonkey"><a class="header" href="#developing-changes-to-spidermonkey">Developing Changes to SpiderMonkey</a></h1>
 <p>StarlingMonkey uses SpiderMonkey as its underlying JS engine, and by default, downloads build
-artifacts from <a href="https://github.com/bytecodealliance/spidermonkey-wasi-embedding">a wrapper repository</a> around
-<a href="https://github.com/bytecodealliance/gecko-dev">our local SpiderMonkey tree</a>. That wrapper repository contains a SpiderMonkey commit-hash
-in a file, and its CI jobs build the artifacts that StarlingMonkey downloads during its build.</p>
+artifacts from <a href="https://github.com/bytecodealliance/spidermonkey-wasi-embedding">a wrapper repository</a> around <a href="https://github.com/bytecodealliance/gecko-dev">our local SpiderMonkey
+tree</a>. That wrapper repository contains a SpiderMonkey commit-hash in a file, and its CI
+jobs build the artifacts that StarlingMonkey downloads during its build.</p>
 <p>This flow is optimized for ease of development of StarlingMonkey, and avoiding the need to build
 SpiderMonkey locally, which requires some additional tools and is resource-intensive. However,
 sometimes it is necessary or desirable to make modifications to SpiderMonkey directly, whether to

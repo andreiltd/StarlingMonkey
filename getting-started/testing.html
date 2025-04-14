@@ -158,13 +158,13 @@
                         <h1 id="testing-starlingmonkey"><a class="header" href="#testing-starlingmonkey">Testing StarlingMonkey</a></h1>
 <h2 id="testing-the-build"><a class="header" href="#testing-the-build">Testing the build</a></h2>
 <p>After completing the build (a debug build in this case), the integration test runner can be built:</p>
-<pre><code class="language-bash">cmake --build cmake-build-debug --target integration-test-server
+<pre><code class="language-bash">$ cmake --build cmake-build-debug --target integration-test-server
 </code></pre>
 <p>Then tests can be run with <code>ctest</code> directly via:</p>
-<pre><code class="language-bash">ctest --test-dir cmake-build-debug -j8 --output-on-failure
+<pre><code class="language-bash">$ ctest --test-dir cmake-build-debug -j8 --output-on-failure
 </code></pre>
 <p>Alternatively, the integration test server can be directly run with <code>wasmtime serve</code> via:</p>
-<pre><code class="language-bash">wasmtime serve -S common cmake-build-debug/test-server.wasm
+<pre><code class="language-bash">$ wasmtime serve -S common cmake-build-debug/test-server.wasm
 </code></pre>
 <p>Then visit http://0.0.0.0:8080/timers, or any test name and filter of the form <code>[testName]/[filter]</code></p>
 <ol start="5">
@@ -176,26 +176,26 @@ creates a component with a name of the form <code>[input-file-name].wasm</code> 
 directory.</p>
 <p>For example, the following command is equivalent to the <code>cmake</code> invocation from step 5, and will
 create the component <code>cmake-build-release/smoke.wasm</code>:</p>
-<pre><code class="language-bash">cd cmake-build-release
-./componentize.sh ../tests/smoke.js
+<pre><code class="language-bash">$ cd cmake-build-release
+$ ./componentize.sh ../tests/smoke.js
 </code></pre>
 <h2 id="web-platform-tests"><a class="header" href="#web-platform-tests">Web Platform Tests</a></h2>
 <p>To run the <a href="https://web-platform-tests.org/">Web Platform Tests</a> suite, the WPT runner requires
 <code>Node.js</code> to be installed, and during build configuration the option <code>ENABLE_WPT:BOOL=ON</code> must be
 set.</p>
-<pre><code class="language-bash">cmake -S . -B cmake-build-debug -DENABLE_WPT:BOOL=ON -DCMAKE_BUILD_TYPE=Debug
-cmake --build cmake-build-debug --parallel 8 --target wpt-runtime
-cd cmake-build-debug
-ctest -R wpt --verbose # Note: some of the tests run fairly slowly in debug builds, so be patient
+<pre><code class="language-bash">$ cmake -S . -B cmake-build-debug -DENABLE_WPT:BOOL=ON -DCMAKE_BUILD_TYPE=Debug
+$ cmake --build cmake-build-debug --parallel 8 --target wpt-runtime
+$ cd cmake-build-debug
+$ ctest -R wpt --verbose # Note: some of the tests run fairly slowly in debug builds, so be patient
 </code></pre>
 <p>The Web Platform Tests checkout can also be customized by setting the
 <code>WPT_ROOT=[path to your WPT checkout]</code> environment variable to the cmake command.</p>
 <p>WPT tests can be filtered with the <code>WPT_FILTER=string</code> variable, for example:</p>
-<pre><code class="language-bash">WPT_FILTER=fetch ctest -R wpt -v
+<pre><code class="language-bash">$ WPT_FILTER=fetch ctest -R wpt -v
 </code></pre>
 <p>Custom flags can also be passed to the test runner via <code>WPT_FLAGS="..."</code>, for example to update
 expectations use:</p>
-<pre><code class="language-bash">WPT_FLAGS="--update-expectations" ctest -R wpt -v
+<pre><code class="language-bash">$ WPT_FLAGS="--update-expectations" ctest -R wpt -v
 </code></pre>
 
                     </main>
