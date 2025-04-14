@@ -436,9 +436,9 @@ void initialize_builtins(api::Engine *engine) {
 
 </code></pre>
 <h2 id="providing-a-custom-host-api-implementation"><a class="header" href="#providing-a-custom-host-api-implementation">Providing a custom host API implementation</a></h2>
-<p>The <a href="../../../../host-apis">host-apis</a> directory can contain implementations of the host API for
-different versions of WASI—or in theory any other host interface. Those can be selected by setting
-the <code>HOST_API</code> environment variable to the name of one of the directories. Currently, only an
+<p>The <a href="../../../../host-apis">host-apis</a> directory can contain implementations of the host API for different
+versions of WASI—or in theory any other host interface. Those can be selected by setting the
+<code>HOST_API</code> environment variable to the name of one of the directories. Currently, only an
 implementation in terms of <a href="../../../../host-apis/wasi-0.2.0">wasi-0.2.0</a> is provided, and used by default.</p>
 <p>To provide a custom host API implementation, you can set <code>HOST_API</code> to the (absolute) path of a
 directory containing that implementation.</p>

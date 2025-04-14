@@ -170,20 +170,20 @@
     <span> | </span>
     <a href="ADOPTERS.html">Adopters</a>
     <span> | </span>
-    <a href="#documentation">Documentation</a>
+    <a href="https://bytecodealliance.github.io/StarlingMonkey">Documentation</a>
     <span> | </span>
     <a href="https://bytecodealliance.zulipchat.com/#narrow/stream/459697-StarlingMonkey">Chat</a>
   </h3>
 </div>
-<p>StarlingMonkey is a [SpiderMonkey][spidermonkey] based JS runtime optimized for use in [WebAssembly
-Components][wasm-component]. StarlingMonkey's core builtins target WASI 0.2.0 to support a Component
+<p>StarlingMonkey is a <a href="https://spidermonkey.dev/">SpiderMonkey</a> based JS runtime optimized for use in <a href="https://component-model.bytecodealliance.org/">WebAssembly
+Components</a>. StarlingMonkey's core builtins target WASI 0.2.0 to support a Component
 Model based event loop and standards-compliant implementations of key web builtins, including the
 fetch API, WHATWG Streams, text encoding, and others. To support tailoring for specific use cases,
 it's designed to be highly modular, and can be readily extended with custom builtins and host APIs.</p>
 <p>StarlingMonkey is used in production for Fastly's JS Compute platform, and Fermyon's Spin JS SDK.
 See the <a href="ADOPTERS.html">ADOPTERS</a> file for more details.</p>
 <h2 id="documentation"><a class="header" href="#documentation">Documentation</a></h2>
-<p>For comprehensive documentation, visit our [Documentation Site][gh-pages].</p>
+<p>For comprehensive documentation, visit our <a href="https://bytecodealliance.github.io/StarlingMonkey/">Documentation Site</a>.</p>
 <h2 id="quick-start"><a class="header" href="#quick-start">Quick Start</a></h2>
 <h3 id="requirements"><a class="header" href="#requirements">Requirements</a></h3>
 <p>The runtime's build is managed by <a href="https://cmake.org/">cmake</a>, which also takes care of downloading the build
@@ -210,7 +210,7 @@ $ cd StarlingMonkey
 <li>Build the runtime</li>
 </ol>
 <p>Building the runtime is done in two phases: first, cmake is used to build a raw version as a
-WebAssembly core module. Then, that module is turned into a [WebAssembly Component][wasm-component]
+WebAssembly core module. Then, that module is turned into a <a href="https://component-model.bytecodealliance.org/">WebAssembly Component</a>
 using the <code>componentize.sh</code> script.</p>
 <p>The following command will build the <code>starling-raw.wasm</code> runtime module in the <code>cmake-build-release</code>
 directory:</p>
@@ -233,9 +233,6 @@ $ ./componentize.sh index.js -o starling.wasm
 </code></pre>
 <p>This way, the JS file will be loaded during componentization, and the top-level code will be
 executed, and can e.g. register a handler for the <code>fetch</code> event to serve HTTP requests.</p>
-<p>[gh-pages]:<br />
-[spidermonkey]: https://spidermonkey.dev/ [wasm-component]:
-https://component-model.bytecodealliance.org/</p>
 
                     </main>
 
