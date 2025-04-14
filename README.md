@@ -17,7 +17,7 @@
     <span> | </span>
     <a href="ADOPTERS.md">Adopters</a>
     <span> | </span>
-    <a href="#documentation">Documentation</a>
+    <a href="https://bytecodealliance.github.io/StarlingMonkey">Documentation</a>
     <span> | </span>
     <a href="https://bytecodealliance.zulipchat.com/#narrow/stream/459697-StarlingMonkey">Chat</a>
   </h3>
@@ -110,6 +110,6 @@ This way, the JS file will be loaded during componentization, and the top-level 
 executed, and can e.g. register a handler for the `fetch` event to serve HTTP requests.
 
 [cmake]: https://cmake.org/
-[gh-pages]:  
-[spidermonkey]: https://spidermonkey.dev/ [wasm-component]:
-https://component-model.bytecodealliance.org/
+[gh-pages]: https://bytecodealliance.github.io/StarlingMonkey/
+[spidermonkey]: https://spidermonkey.dev/ 
+[wasm-component]: https://component-model.bytecodealliance.org/
