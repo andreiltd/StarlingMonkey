@@ -2,7 +2,7 @@
 
 ## Reaching out
 
-Ask questions in the BytecodeAlliance Zullip [#StarlingMonkey](starlingmonkey) channel
+Ask questions in the BytecodeAlliance Zullip [#StarlingMonkey][starlingmonkey] channel
 
 ## Code of Conduct
 

@@ -23,7 +23,7 @@ jobs:
 
   deploy:
     needs: [changes]
-    # if: ${{ !contains(needs.changes.outputs.dirs, '[]') }}
+    if: ${{ !contains(needs.changes.outputs.dirs, '[]') }}
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     concurrency:
@@ -68,6 +68,11 @@ jobs:
         id: lychee
         uses: lycheeverse/lychee-action@v2
         with:
+          args: --exclude-all-private
           fail: false
 
-     # TODO(create isssue from previous step)
+      - name: Warning for broken links
+        if: ${{ steps.lychee.outputs.exit_code != 0 }}
+        run: |
+          echo "::warning ::Found broken links in documentation!"
+          echo "## Link Check Results" >> $GITHUB_STEP_SUMMARY
