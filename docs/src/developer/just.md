@@ -10,32 +10,32 @@ Once installed, navigate to the project directory and run `just` commands as nee
 the following commands will configure a default `cmake-build-debug` directory and build the project.
 
 ```shell
-just build
+$ just build
 ```
 
 To load a JS script during componentization and serve its output using `Wasmtime`, run:
 
 ```shell
-just serve <filename>.js
+$ just serve <filename>.js
 ```
 
 To build and run integration tests run:
 
 ```shell
-just test
+$ just test
 ```
 
 To build and run Web Platform Tests run:
 
 ```shell
-just wpt-test # run all tests
-just wpt-test console/console-log-symbol.any.js # run specific test
+$ just wpt-test # run all tests
+$ just wpt-test console/console-log-symbol.any.js # run specific test
 ```
 
 To view a complete list of available recipes, run:
 
 ```shell
-just --list
+$ just --list
 
 ```
 
@@ -63,7 +63,7 @@ The default build mode is debug, which automatically configures the build direct
 mode parameter. For example:
 
 ```shell
-just mode=release build
+$ just mode=release build
 ```
 
 This command will set the build mode to release, and the build directory will automatically change
@@ -72,7 +72,7 @@ to `cmake-build-release`.
 If you want to override the default build directory, you can use the `builddir` parameter.
 
 ```shell
-just builddir=mybuilddir mode=release build
+$ just builddir=mybuilddir mode=release build
 ```
 
 This command configures CMake to use `mybuilddir` as the build directory and sets the build mode to
@@ -83,14 +83,14 @@ This command configures CMake to use `mybuilddir` as the build directory and set
 You can also start a Web Platform Tests (WPT) server with:
 
 ```shell
-just wpt-server
+$ just wpt-server
 ```
 
 After starting the server, individual tests can be run by sending a request with the test name to
 the server instance. For example:
 
 ```shell
-curl http://127.0.0.1:7676/console/console-log-symbol.any.js
+$ curl http://127.0.0.1:7676/console/console-log-symbol.any.js
 
 ```
 
