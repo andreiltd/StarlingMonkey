@@ -87,12 +87,11 @@ class MyClass {
 }
 ```
 
-- Step 1: Define the Header File (`ma_class.h`)
+#### Step 1: Define the Header File (`my_class.h`)
 
 Create a header file to declare the native class and its methods/properties.
 
-````cpp
-
+```cpp
 #ifndef BUILTINS_MY_CLASS_H
 #define BUILTINS_MY_CLASS_H
 
@@ -131,8 +130,9 @@ bool install(api::Engine *engine);
 } // namespace builtins
 
 #endif // BUILTINS_MY_CLASS_H
+```
 
-- Step 2: Implement the Class (`my_class.cpp`)
+#### Step 2: Implement the Class (`my_class.cpp`)
 
 ```cpp
 #include "my_class.h"
@@ -233,12 +233,12 @@ bool install(api::Engine *engine) {
 
 } // namespace my_class
 } // namespace builtins
-````
+```
 
 Deriving from `BuiltinImpl` automatically creates a `JSClass` definition using parameters provided
 by the implementation:
 
-#### Explanation of StarlingMonkey API Usage
+##### Explanation of StarlingMonkey API Usage
 
 ```cpp
 static constexpr JSClass class_{
@@ -272,8 +272,8 @@ StarlingMonkey provides macros and helper functions to simplify native class imp
 
 - `is_instance(JSObject *obj)`:
 
-  - used to verify if object passed is instance of builtin class.
-  - used often as assertion in class methods, for example:
+  - Used to verify if object passed is instance of builtin class.
+  - Used often as assertion in class methods, for example:
     ```cpp
     JSString *MyObject::my_method(JSObject *self) {
       MOZ_ASSERT(is_instance(self));
@@ -281,11 +281,7 @@ StarlingMonkey provides macros and helper functions to simplify native class imp
     }
     ```
 
-  ```
-
-  ```
-
-- Step 3: Register the Class with StarlingMonkey Engine
+#### Step 3: Register the Class with StarlingMonkey Engine
 
 Finally, ensure your class is installed into the StarlingMonkey engine during initialization:
 
