@@ -239,19 +239,7 @@
 <p>Alternatively, the integration test server can be directly run with <code>wasmtime serve</code> via:</p>
 <pre><code class="language-console">wasmtime serve -S common cmake-build-debug/test-server.wasm
 </code></pre>
-<p>Then visit http://0.0.0.0:8080/timers, or any test name and filter of the form <code>[testName]/[filter]</code></p>
-<ol start="5">
-<li>Using the runtime with other JS applications</li>
-</ol>
-<p>The build directory contains a shell script <code>componentize.sh</code> that can be used to create components
-from JS applications. <code>componentize.sh</code> takes a single argument, the path to the JS application, and
-creates a component with a name of the form <code>[input-file-name].wasm</code> in the current working
-directory.</p>
-<p>For example, the following command is equivalent to the <code>cmake</code> invocation from step 5, and will
-create the component <code>cmake-build-release/smoke.wasm</code>:</p>
-<pre><code class="language-console">cd cmake-build-release
-./componentize.sh ../tests/smoke.js
-</code></pre>
+<p>Then visit <code>http://0.0.0.0:8080/timers</code>, or any test name and filter of the form <code>[testName]/[filter]</code></p>
 <h2 id="web-platform-tests"><a class="header" href="#web-platform-tests">Web Platform Tests</a></h2>
 <p>To run the <a href="https://web-platform-tests.org/">Web Platform Tests</a> suite, the WPT runner requires
 <code>Node.js</code> above v18.0 to be installed, and during build configuration the option <code>ENABLE_WPT:BOOL=ON</code>

@@ -250,10 +250,14 @@ namespace my_project::my_builtin {
 for the <code>SRC</code> argument.</p>
 <h2 id="writing-builtins"><a class="header" href="#writing-builtins">Writing builtins</a></h2>
 <h3 id="rooting"><a class="header" href="#rooting">Rooting</a></h3>
-<blockquote>
+<div class="mdbook-alerts mdbook-alerts-important">
+<p class="mdbook-alerts-title">
+  <span class="mdbook-alerts-icon"></span>
+  important
+</p>
 <p>SpiderMonkey has a moving GC, it is very important that it knows about each and every pointer to a
 GC thing in the system. SpiderMonkey’s rooting API tries to make this task as simple as possible.</p>
-</blockquote>
+</div>
 <p>It is highly recommended that readers review the <code>SpiderMonkey</code>
 <a href="https://github.com/mozilla-spidermonkey/spidermonkey-embedding-examples/blob/next/docs/GC%20Rooting%20Guide.md">documentation</a> on rooting before proceeding with this section. For
 convenience, here is a brief recap of the main rooting rules from the referenced page:</p>
@@ -478,7 +482,7 @@ by the implementation:</p>
 <p><code>METHOD_HEADER(required_argc)</code>:</p>
 <ul>
 <li>Initializes method arguments.</li>
-<li>Ensures the receiver (<del>this</del>) is an instance of the correct class.</li>
+<li>Ensures the receiver (<code>this</code>) is an instance of the correct class.</li>
 <li>Checks the minimum number of arguments.</li>
 </ul>
 </li>
@@ -496,12 +500,16 @@ by the implementation:</p>
 </ul>
 </li>
 </ul>
-<blockquote>
-<p>[!NOTE] Registering the Class with StarlingMonkey Engine</p>
+<div class="mdbook-alerts mdbook-alerts-note">
+<p class="mdbook-alerts-title">
+  <span class="mdbook-alerts-icon"></span>
+  note
+</p>
+<p>Registering the Class with StarlingMonkey Engine</p>
 <p>When you use <code>add_builtin</code> in your CMakeLists.txt file, it automatically adds your builtin to the
 <code>builtins.incl</code>file, which is then processed to ensure your <code>install</code> function is
 called during engine initialization.</p>
-</blockquote>
+</div>
 <h2 id="providing-a-custom-host-api-implementation"><a class="header" href="#providing-a-custom-host-api-implementation">Providing a custom host API implementation</a></h2>
 <p>The <code>host-apis</code> directory can contain implementations of the host API for different
 versions of WASI—or in theory any other host interface. Those can be selected by setting the

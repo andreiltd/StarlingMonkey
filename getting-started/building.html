@@ -236,47 +236,59 @@ the build dependencies. To properly manage the Rust toolchain, the build script 
 <p>See also <a href="../developer/just.html">Project workflow using <code>just</code></a> for documentation on how to use
 <code>just</code> to streamline the project interface.</p>
 <h2 id="usage"><a class="header" href="#usage">Usage</a></h2>
-<p>With sufficiently new versions of <code>cmake</code> and <code>rustup</code> installed, the build process is as follows:</p>
-<ol>
-<li>Clone the repo</li>
-</ol>
+<h3 id="step-1-clone-the-repo"><a class="header" href="#step-1-clone-the-repo">Step 1: Clone the repo</a></h3>
 <pre><code class="language-console">git clone https://github.com/bytecodealliance/StarlingMonkey
 cd StarlingMonkey
 </code></pre>
-<ol start="2">
-<li>Run the configuration script</li>
-</ol>
-<p>For a release configuration, run</p>
+<h3 id="step-2-run-the-configuration-script"><a class="header" href="#step-2-run-the-configuration-script">Step 2: Run the configuration script</a></h3>
+<p>Choose one of the following configurations:</p>
+<ul>
+<li>
+<p>For a release configuration:</p>
 <pre><code class="language-console">cmake -S . -B cmake-build-release -DCMAKE_BUILD_TYPE=Release
 </code></pre>
-<p>For a debug configuration, run</p>
+</li>
+<li>
+<p>For a debug configuration:</p>
 <pre><code class="language-console">cmake -S . -B cmake-build-debug -DCMAKE_BUILD_TYPE=Debug
 </code></pre>
-<ol start="3">
-<li>Build the runtime</li>
-</ol>
+</li>
+</ul>
+<h3 id="step-3-build-the-runtime"><a class="header" href="#step-3-build-the-runtime">Step 3: Build the runtime</a></h3>
 <p>Building the runtime is done in two phases: first, cmake is used to build a raw version as a
 WebAssembly core module. Then, that module is turned into a
 <a href="https://component-model.bytecodealliance.org/">WebAssembly Component</a> using the <code>componentize.sh</code>
 script.</p>
-<p>The following command will build the runtime, creating the files <code>starling-raw.wasm</code> and <code>starling.wasm</code> in the <code>cmake-build-release</code>
-directory:</p>
+<ul>
+<li>
+<p><strong>Build the WebAssembly component</strong></p>
+<p>The following command will build the runtime, creating the files <code>starling-raw.wasm</code> and
+<code>starling.wasm</code> in the <code>cmake-build-release</code> directory:</p>
 <pre><code class="language-console"># Use cmake-build-debug for the debug build
 # Change the value for `--parallel` to match the number of CPU cores in your system
 cmake --build cmake-build-release --parallel 8 --target starling
 </code></pre>
+</li>
+<li>
+<p><strong>Test the runtime</strong></p>
 <p>The <code>starling.wasm</code> component can be used to load and evaluate JS code dynamically:</p>
 <pre><code class="language-console">wasmtime -S http starling.wasm -e "console.log('hello world')"
 # or, to load a file:
 wasmtime -S http --dir . starling.wasm index.js
 </code></pre>
-<p>Alternatively, the <code>componentize.js</code> script also provided in the build directory lets us create a component from a JS file:</p>
+</li>
+<li>
+<p><strong>Create components from JS files (alternative approach)</strong></p>
+<p>Alternatively, the <code>componentize.js</code> script also provided in the build directory lets us create a
+component from a JS file:</p>
 <pre><code class="language-console">cd cmake-build-release
 ./componentize.sh index.js
 wasmtime -S http --dir . index.wasm
 </code></pre>
 <p>This way, the JS file will be loaded during componentization, and the top-level code will be
 executed, and can e.g. register a handler for the <code>fetch</code> event to serve HTTP requests.</p>
+</li>
+</ul>
 
                     </main>
 

@@ -379,47 +379,59 @@ the build dependencies. To properly manage the Rust toolchain, the build script 
 <p>See also <a href="getting-started/../developer/just.html">Project workflow using <code>just</code></a> for documentation on how to use
 <code>just</code> to streamline the project interface.</p>
 <h2 id="usage-1"><a class="header" href="#usage-1">Usage</a></h2>
-<p>With sufficiently new versions of <code>cmake</code> and <code>rustup</code> installed, the build process is as follows:</p>
-<ol>
-<li>Clone the repo</li>
-</ol>
+<h3 id="step-1-clone-the-repo"><a class="header" href="#step-1-clone-the-repo">Step 1: Clone the repo</a></h3>
 <pre><code class="language-console">git clone https://github.com/bytecodealliance/StarlingMonkey
 cd StarlingMonkey
 </code></pre>
-<ol start="2">
-<li>Run the configuration script</li>
-</ol>
-<p>For a release configuration, run</p>
+<h3 id="step-2-run-the-configuration-script"><a class="header" href="#step-2-run-the-configuration-script">Step 2: Run the configuration script</a></h3>
+<p>Choose one of the following configurations:</p>
+<ul>
+<li>
+<p>For a release configuration:</p>
 <pre><code class="language-console">cmake -S . -B cmake-build-release -DCMAKE_BUILD_TYPE=Release
 </code></pre>
-<p>For a debug configuration, run</p>
+</li>
+<li>
+<p>For a debug configuration:</p>
 <pre><code class="language-console">cmake -S . -B cmake-build-debug -DCMAKE_BUILD_TYPE=Debug
 </code></pre>
-<ol start="3">
-<li>Build the runtime</li>
-</ol>
+</li>
+</ul>
+<h3 id="step-3-build-the-runtime"><a class="header" href="#step-3-build-the-runtime">Step 3: Build the runtime</a></h3>
 <p>Building the runtime is done in two phases: first, cmake is used to build a raw version as a
 WebAssembly core module. Then, that module is turned into a
 <a href="https://component-model.bytecodealliance.org/">WebAssembly Component</a> using the <code>componentize.sh</code>
 script.</p>
-<p>The following command will build the runtime, creating the files <code>starling-raw.wasm</code> and <code>starling.wasm</code> in the <code>cmake-build-release</code>
-directory:</p>
+<ul>
+<li>
+<p><strong>Build the WebAssembly component</strong></p>
+<p>The following command will build the runtime, creating the files <code>starling-raw.wasm</code> and
+<code>starling.wasm</code> in the <code>cmake-build-release</code> directory:</p>
 <pre><code class="language-console"># Use cmake-build-debug for the debug build
 # Change the value for `--parallel` to match the number of CPU cores in your system
 cmake --build cmake-build-release --parallel 8 --target starling
 </code></pre>
+</li>
+<li>
+<p><strong>Test the runtime</strong></p>
 <p>The <code>starling.wasm</code> component can be used to load and evaluate JS code dynamically:</p>
 <pre><code class="language-console">wasmtime -S http starling.wasm -e "console.log('hello world')"
 # or, to load a file:
 wasmtime -S http --dir . starling.wasm index.js
 </code></pre>
-<p>Alternatively, the <code>componentize.js</code> script also provided in the build directory lets us create a component from a JS file:</p>
+</li>
+<li>
+<p><strong>Create components from JS files (alternative approach)</strong></p>
+<p>Alternatively, the <code>componentize.js</code> script also provided in the build directory lets us create a
+component from a JS file:</p>
 <pre><code class="language-console">cd cmake-build-release
 ./componentize.sh index.js
 wasmtime -S http --dir . index.wasm
 </code></pre>
 <p>This way, the JS file will be loaded during componentization, and the top-level code will be
 executed, and can e.g. register a handler for the <code>fetch</code> event to serve HTTP requests.</p>
+</li>
+</ul>
 <div style="break-before: page; page-break-before: always;"></div><style>
 .mdbook-alerts {
   padding: 8px 16px;
@@ -498,19 +510,7 @@ executed, and can e.g. register a handler for the <code>fetch</code> event to se
 <p>Alternatively, the integration test server can be directly run with <code>wasmtime serve</code> via:</p>
 <pre><code class="language-console">wasmtime serve -S common cmake-build-debug/test-server.wasm
 </code></pre>
-<p>Then visit http://0.0.0.0:8080/timers, or any test name and filter of the form <code>[testName]/[filter]</code></p>
-<ol start="5">
-<li>Using the runtime with other JS applications</li>
-</ol>
-<p>The build directory contains a shell script <code>componentize.sh</code> that can be used to create components
-from JS applications. <code>componentize.sh</code> takes a single argument, the path to the JS application, and
-creates a component with a name of the form <code>[input-file-name].wasm</code> in the current working
-directory.</p>
-<p>For example, the following command is equivalent to the <code>cmake</code> invocation from step 5, and will
-create the component <code>cmake-build-release/smoke.wasm</code>:</p>
-<pre><code class="language-console">cd cmake-build-release
-./componentize.sh ../tests/smoke.js
-</code></pre>
+<p>Then visit <code>http://0.0.0.0:8080/timers</code>, or any test name and filter of the form <code>[testName]/[filter]</code></p>
 <h2 id="web-platform-tests"><a class="header" href="#web-platform-tests">Web Platform Tests</a></h2>
 <p>To run the <a href="https://web-platform-tests.org/">Web Platform Tests</a> suite, the WPT runner requires
 <code>Node.js</code> above v18.0 to be installed, and during build configuration the option <code>ENABLE_WPT:BOOL=ON</code>
@@ -658,9 +658,9 @@ to <code>cmake-build-release</code>.</p>
 <p>After starting the server, tests can be run interactively with a basic web interface running at http://127.0.0.1:7879/. Tests can be filtered by providing prefixes or exact names of subsets or specific tests.</p>
 <p>Some examples:</p>
 <ul>
-<li>Running all of StarlingMonkey’s WPT tests: http://127.0.0.1:7879/</li>
-<li>Running all console tests: http://127.0.0.1:7879/console</li>
-<li>Running a specific test: http://127.0.0.1:7879/console/console-log-symbol.any.js</li>
+<li>Running all of StarlingMonkey’s WPT tests: <code>http://127.0.0.1:7879/</code></li>
+<li>Running all console tests: <code>http://127.0.0.1:7879/console</code></li>
+<li>Running a specific test: <code>http://127.0.0.1:7879/console/console-log-symbol.any.js</code></li>
 </ul>
 <pre><code class="language-console">curl http://127.0.0.1:7676/console/console-log-symbol.any.js
 </code></pre>
@@ -753,10 +753,14 @@ namespace my_project::my_builtin {
 for the <code>SRC</code> argument.</p>
 <h2 id="writing-builtins"><a class="header" href="#writing-builtins">Writing builtins</a></h2>
 <h3 id="rooting"><a class="header" href="#rooting">Rooting</a></h3>
-<blockquote>
+<div class="mdbook-alerts mdbook-alerts-important">
+<p class="mdbook-alerts-title">
+  <span class="mdbook-alerts-icon"></span>
+  important
+</p>
 <p>SpiderMonkey has a moving GC, it is very important that it knows about each and every pointer to a
 GC thing in the system. SpiderMonkey’s rooting API tries to make this task as simple as possible.</p>
-</blockquote>
+</div>
 <p>It is highly recommended that readers review the <code>SpiderMonkey</code>
 <a href="https://github.com/mozilla-spidermonkey/spidermonkey-embedding-examples/blob/next/docs/GC%20Rooting%20Guide.md">documentation</a> on rooting before proceeding with this section. For
 convenience, here is a brief recap of the main rooting rules from the referenced page:</p>
@@ -981,7 +985,7 @@ by the implementation:</p>
 <p><code>METHOD_HEADER(required_argc)</code>:</p>
 <ul>
 <li>Initializes method arguments.</li>
-<li>Ensures the receiver (<del>this</del>) is an instance of the correct class.</li>
+<li>Ensures the receiver (<code>this</code>) is an instance of the correct class.</li>
 <li>Checks the minimum number of arguments.</li>
 </ul>
 </li>
@@ -999,12 +1003,16 @@ by the implementation:</p>
 </ul>
 </li>
 </ul>
-<blockquote>
-<p>[!NOTE] Registering the Class with StarlingMonkey Engine</p>
+<div class="mdbook-alerts mdbook-alerts-note">
+<p class="mdbook-alerts-title">
+  <span class="mdbook-alerts-icon"></span>
+  note
+</p>
+<p>Registering the Class with StarlingMonkey Engine</p>
 <p>When you use <code>add_builtin</code> in your CMakeLists.txt file, it automatically adds your builtin to the
 <code>builtins.incl</code>file, which is then processed to ensure your <code>install</code> function is
 called during engine initialization.</p>
-</blockquote>
+</div>
 <h2 id="providing-a-custom-host-api-implementation"><a class="header" href="#providing-a-custom-host-api-implementation">Providing a custom host API implementation</a></h2>
 <p>The <code>host-apis</code> directory can contain implementations of the host API for different
 versions of WASI—or in theory any other host interface. Those can be selected by setting the
