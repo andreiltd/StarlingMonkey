@@ -283,13 +283,17 @@ to <code>cmake-build-release</code>.</p>
 <p>This command configures CMake to use <code>mybuilddir</code> as the build directory and sets the build mode to
 <code>release</code>.</p>
 <h2 id="starting-the-wpt-server"><a class="header" href="#starting-the-wpt-server">Starting the WPT Server</a></h2>
-<p>You can also start a Web Platform Tests (WPT) server with:</p>
+<p>After running <code>just wpt-setup</code> as described above, you can also start a Web Platform Tests (WPT) server with:</p>
 <pre><code class="language-console">just wpt-server
 </code></pre>
-<p>After starting the server, individual tests can be run by sending a request with the test name to
-the server instance. For example:</p>
+<p>After starting the server, tests can be run interactively with a basic web interface running at http://127.0.0.1:7879/. Tests can be filtered by providing prefixes or exact names of subsets or specific tests.</p>
+<p>Some examples:</p>
+<ul>
+<li>Running all of StarlingMonkey’s WPT tests: http://127.0.0.1:7879/</li>
+<li>Running all console tests: http://127.0.0.1:7879/console</li>
+<li>Running a specific test: http://127.0.0.1:7879/console/console-log-symbol.any.js</li>
+</ul>
 <pre><code class="language-console">curl http://127.0.0.1:7676/console/console-log-symbol.any.js
-
 </code></pre>
 
                     </main>

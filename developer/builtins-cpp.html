@@ -442,7 +442,7 @@ bool install(api::Engine *engine) {
 </code></pre>
 <p>Deriving from <code>BuiltinImpl</code> automatically creates a <code>JSClass</code> definition using parameters provided
 by the implementation:</p>
-<h5 id="explanation-of-starlingmonkey-api-usage"><a class="header" href="#explanation-of-starlingmonkey-api-usage">Explanation of StarlingMonkey API Usage</a></h5>
+<h4 id="explanation-of-starlingmonkey-api-usage"><a class="header" href="#explanation-of-starlingmonkey-api-usage">Explanation of StarlingMonkey API Usage</a></h4>
 <pre><code class="language-cpp">static constexpr JSClass class_{
     Impl::class_name,
     JSCLASS_HAS_RESERVED_SLOTS(static_cast&lt;uint32_t&gt;(Impl::Slots::Count)) | class_flags,
@@ -485,8 +485,8 @@ by the implementation:</p>
 <li>
 <p><code>is_instance(JSObject *obj)</code>:</p>
 <ul>
-<li>Used to verify if object passed is instance of builtin class.</li>
-<li>Used often as assertion in class methods, for example:
+<li>Used to verify if object passed is instance of builtin class or subclass.</li>
+<li>Used often as assertion in class methods to ensure expected memory layout, for example:
 <pre><code class="language-cpp">JSString *MyObject::my_method(JSObject *self) {
   MOZ_ASSERT(is_instance(self));
   return JS::GetReservedSlot(self, Slots::MySlot).toString();
@@ -496,23 +496,18 @@ by the implementation:</p>
 </ul>
 </li>
 </ul>
-<h4 id="step-3-register-the-class-with-starlingmonkey-engine"><a class="header" href="#step-3-register-the-class-with-starlingmonkey-engine">Step 3: Register the Class with StarlingMonkey Engine</a></h4>
-<p>Finally, ensure your class is installed into the StarlingMonkey engine during initialization:</p>
-<pre><code class="language-cpp">// Example initialization code
-#include "my_class.h"
-
-void initialize_builtins(api::Engine *engine) {
-  builtins::my_class::install(engine);
-}
-
-</code></pre>
+<blockquote>
+<p>[!NOTE] Registering the Class with StarlingMonkey Engine</p>
+<p>When you use <code>add_builtin</code> in your CMakeLists.txt file, it automatically adds your builtin to the
+<code>builtins.incl</code>file, which is then processed to ensure your <code>install</code> function is
+called during engine initialization.</p>
+</blockquote>
 <h2 id="providing-a-custom-host-api-implementation"><a class="header" href="#providing-a-custom-host-api-implementation">Providing a custom host API implementation</a></h2>
 <p>The <code>host-apis</code> directory can contain implementations of the host API for different
 versions of WASI—or in theory any other host interface. Those can be selected by setting the
-<code>HOST_API</code> environment variable to the name of one of the directories. Currently, only an
-implementation in terms of <code>host-apis/wasi-0.2.0</code> is provided, and used by default.</p>
+<code>HOST_API</code> environment variable to the name of one of the directories. Currently, implementations in terms of wasi-0.2.0, wasi-0.2.2, and wasi-0.2.3 are provided, with the latter <a href="https://github.com/bytecodealliance/StarlingMonkey/blob/1f5f81f6954c8c08a4d3bcec40488c29347d539c/CMakeLists.txt#L19">used by default</a>.</p>
 <p>To provide a custom host API implementation, you can set <code>HOST_API</code> to the (absolute) path of a
-directory containing that implementation.</p>
+directory containing that implementation. As is done in the implementations for <code>wasi-0.2.{2,3}</code>, it’s possible to extend existing implementations instead of duplicating any shared implementation.</p>
 
                     </main>
 
