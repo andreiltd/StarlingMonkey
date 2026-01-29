@@ -1,5 +1,23 @@
 # Changelog
 
+## [0.3.0](https://github.com/andreiltd/StarlingMonkey/compare/starlingmonkey-v0.2.1...starlingmonkey-v0.3.0) (2026-01-29)
+
+
+### Features
+
+* **url:** implement `URLSearchParams.size` property ([#296](https://github.com/andreiltd/StarlingMonkey/issues/296)) ([27d1d5d](https://github.com/andreiltd/StarlingMonkey/commit/27d1d5d5126c475d948aaadffed6c543758e3b73))
+
+
+### Bug Fixes
+
+* **ci:** Fix release-please setup ([#282](https://github.com/andreiltd/StarlingMonkey/issues/282)) ([9d9a34b](https://github.com/andreiltd/StarlingMonkey/commit/9d9a34b9a1de6c5fedb65d0a44b77677bf02b9bc))
+* **ci:** Unify release-please CI workflows ([#284](https://github.com/andreiltd/StarlingMonkey/issues/284)) ([c5f80bd](https://github.com/andreiltd/StarlingMonkey/commit/c5f80bd82209913141723f14016ef4157daaf964))
+* **debugger:** Fix path normalization in debugger sourcemaps handling ([#279](https://github.com/andreiltd/StarlingMonkey/issues/279)) ([afcf222](https://github.com/andreiltd/StarlingMonkey/commit/afcf222f512eb211d1b29d7a427fc8db6dd27f84))
+* Prevent `URLSearchParams.toString()` from returning unencoded params when not modified ([#292](https://github.com/andreiltd/StarlingMonkey/issues/292)) ([a2ddae3](https://github.com/andreiltd/StarlingMonkey/commit/a2ddae3d463c61437fafc490308016fbc2a53cdd))
+* **url:** allow `SpecSlice` to hold empty strings ([#293](https://github.com/andreiltd/StarlingMonkey/issues/293)) ([faa9114](https://github.com/andreiltd/StarlingMonkey/commit/faa9114ac16b3ba665d7863915f7edb866b91248))
+* **url:** fix leaky `Drop`s for `SpecString` and `CVec` ([#294](https://github.com/andreiltd/StarlingMonkey/issues/294)) ([51d5388](https://github.com/andreiltd/StarlingMonkey/commit/51d5388c48811688329bb5fd2a13384574ac6cfd))
+* **url:** make URLSearchParams record constructor spec compliant ([#295](https://github.com/andreiltd/StarlingMonkey/issues/295)) ([d591115](https://github.com/andreiltd/StarlingMonkey/commit/d59111599472cf2cd921cde323847824bea4a8a8))
+
 ## [0.2.1](https://github.com/bytecodealliance/StarlingMonkey/compare/v0.2.0...v0.2.1) (2025-10-15)
 
 
