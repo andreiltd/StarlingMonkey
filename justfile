@@ -3,6 +3,7 @@ justdir := justfile_directory()
 mode := 'debug'
 builddir := justdir / 'cmake-build-' + mode
 reconfigure := 'false'
+slim := 'false'
 
 alias b := build
 alias t := test
@@ -14,23 +15,34 @@ alias fmt := format
 default:
     @echo 'Default mode {{ mode }}'
     @echo 'Default build directory {{ builddir }}'
+    @echo 'Slim build {{ slim }}'
     @just --list
 
 # Build specified target or all otherwise
 build target="all" *flags:
     #!/usr/bin/env bash
     set -euo pipefail
-    echo 'Setting build directory to {{ builddir }}, build type {{ mode }}'
+    echo 'Setting build directory to {{ builddir }}, build type {{ mode }}, slim={{ slim }}'
+
+    # Set slim flag if enabled
+    slim_flag=""
+    if [ "{{ slim }}" = "true" ]; then
+        slim_flag="-DBUILD_SLIM=ON"
+    fi
 
     # Only run configure step if build directory doesn't exist yet
     if ! {{ path_exists(builddir) }} || {{ reconfigure }} = 'true'; then
-        cmake -S . -B {{ builddir }} {{ flags }} -DCMAKE_BUILD_TYPE={{ capitalize(mode) }}
+        cmake -S . -B {{ builddir }} {{ flags }} ${slim_flag} -DCMAKE_BUILD_TYPE={{ capitalize(mode) }}
     else
         echo 'build directory already exists, skipping cmake configure'
     fi
 
     # Build target
     cmake --build {{ builddir }} --parallel {{ ncpus }} {{ if target == "" { "" } else { "--target " + target } }}
+
+# Build slim variant (minimal runtime without HTTP, crypto, etc.)
+build-slim target="starling-raw.wasm":
+    just slim=true mode=release builddir={{ justdir / 'cmake-build-slim' }} build {{ target }}
 
 # Run clean target
 clean:

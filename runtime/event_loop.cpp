@@ -4,7 +4,6 @@
 #include "jsapi.h"
 #include "jsfriendapi.h"
 
-#include <iostream>
 #include <vector>
 
 struct TaskQueue {

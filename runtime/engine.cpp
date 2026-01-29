@@ -194,6 +194,9 @@ JS::PersistentRootedObject INIT_SCRIPT_GLOBAL;
 static ScriptLoader* scriptLoader;
 JS::PersistentRootedObject unhandledRejectedPromises;
 
+// performance time origin initialization function
+extern "C" void __attribute__((weak)) perf_init_time_origin();
+
 void gc_callback(JSContext *cx, JSGCStatus status, JS::GCReason reason, void *data) {
   LOG("gc for reason %s, %s\n", JS::ExplainGCReason(reason), status ? "end" : "start");
 }
@@ -342,9 +345,9 @@ bool init_js(const EngineConfig& config) {
   opts->setForceFullParse();
   scriptLoader = new ScriptLoader(ENGINE, opts, config.path_prefix);
 
-  // TODO: restore in a way that doesn't cause a dependency on the Performance builtin in the core runtime.
-  //   builtins::Performance::timeOrigin.emplace(
-  //       std::chrono::high_resolution_clock::now());
+  if (perf_init_time_origin) {
+    perf_init_time_origin();
+  }
 
   return true;
 }

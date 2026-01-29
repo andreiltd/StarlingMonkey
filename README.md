@@ -69,6 +69,21 @@ For a debug configuration, run
 cmake -S . -B cmake-build-debug -DCMAKE_BUILD_TYPE=Debug
 ```
 
+For a **slim build** (minimal runtime without HTTP, crypto, and most builtins), run
+
+```console
+cmake -S . -B cmake-build-slim -DBUILD_SLIM=ON -DCMAKE_BUILD_TYPE=Release
+```
+
+The slim build produces a significantly smaller binary by:
+- Disabling HTTP/fetch support (targets `wasi:cli` only)
+- Removing crypto/OpenSSL dependency
+- Keeping only essential builtins: `console`, `timers`, `TextEncoder/TextDecoder`
+- Using size-optimized compilation (`-Oz`)
+- Configuring SpiderMonkey with size optimizations (`--disable-js-streams`, `--disable-jitspew`, etc.)
+
+**Note:** The slim build will automatically build SpiderMonkey from source (no prebuilts available for slim configuration). This takes 10-20 minutes but provides maximum size reduction (~3.8 MB vs ~10 MB full build).
+
 3. Build the runtime
 
 The build system provides two targets for the runtime: `starling-raw.wasm` and `starling.wasm`. The former is a raw WebAssembly core module that can be used to build a WebAssembly Component, while the latter is the final componentized runtime that can be used directly with a WebAssembly Component-aware runtime like [wasmtime](https://wasmtime.dev/).

@@ -5,7 +5,6 @@
 #include <algorithm>
 #include <ctime>
 #include <host_api.h>
-#include <iostream>
 #include <list>
 #include <map>
 #include <vector>

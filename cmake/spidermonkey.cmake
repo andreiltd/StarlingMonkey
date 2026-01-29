@@ -14,6 +14,11 @@ if (WEVAL)
     set(SM_BUILD_TYPE "${SM_BUILD_TYPE}_weval")
 endif()
 
+# Slim builds use a different SpiderMonkey configuration (size-optimized)
+if (BUILD_SLIM)
+    set(SM_BUILD_TYPE "${SM_BUILD_TYPE}_slim")
+endif()
+
 # If the developer has specified an alternate local set of SpiderMonkey
 # artifacts, use them. This allows for local/in-tree development without
 # requiring a roundtrip through GitHub CI.
@@ -114,14 +119,25 @@ ac_add_options --disable-shared-js
 ac_add_options --disable-shared-memory
 ac_add_options --disable-tests
 ac_add_options --disable-clang-plugin
-ac_add_options --enable-jitspew
-ac_add_options --enable-optimize=-O3
-ac_add_options --enable-js-streams
 ac_add_options --enable-portable-baseline-interp
 ac_add_options --prefix=${SM_OBJ_DIR}/dist
 mk_add_options MOZ_OBJDIR=${SM_OBJ_DIR}
 mk_add_options AUTOCLOBBER=1
 ")
+
+    # Build variant specific options: slim (size-optimized) vs standard
+    if(BUILD_SLIM)
+        string(APPEND MOZCONFIG_CONTENT "ac_add_options --enable-optimize=-Oz\n")
+        string(APPEND MOZCONFIG_CONTENT "ac_add_options --disable-jitspew\n")
+        string(APPEND MOZCONFIG_CONTENT "ac_add_options --disable-js-streams\n")
+        string(APPEND MOZCONFIG_CONTENT "ac_add_options --wasm-no-experimental\n")
+        string(APPEND MOZCONFIG_CONTENT "ac_add_options --disable-wasm-multi-memory\n")
+        string(APPEND MOZCONFIG_CONTENT "ac_add_options --disable-wasm-js-string-builtins\n")
+    else()
+        string(APPEND MOZCONFIG_CONTENT "ac_add_options --enable-optimize=-O3\n")
+        string(APPEND MOZCONFIG_CONTENT "ac_add_options --enable-jitspew\n")
+        string(APPEND MOZCONFIG_CONTENT "ac_add_options --enable-js-streams\n")
+    endif()
 
     # Add WASI sysroot if available
     if(DEFINED ENV{WASI_SYSROOT})

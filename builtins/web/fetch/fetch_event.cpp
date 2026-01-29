@@ -13,7 +13,6 @@
 #include <debugger.h>
 #include <js/SourceText.h>
 
-#include <iostream>
 #include <memory>
 #include <optional>
 

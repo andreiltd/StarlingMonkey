@@ -3,6 +3,34 @@ set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_INTERPROCEDURAL_OPTIMIZATION TRUE)
 
+# Slim build option - creates a minimal runtime targeting wasi:cli only
+option(BUILD_SLIM "Build a minimal slim variant without HTTP, crypto, and most builtins" OFF)
+
+if(BUILD_SLIM)
+    message(STATUS "Building SLIM variant - minimal runtime with reduced builtins")
+    # Force disable builtins that are not needed for slim build
+    set(ENABLE_BUILTIN_WEB_FETCH OFF CACHE BOOL "" FORCE)
+    set(ENABLE_BUILTIN_WEB_FETCH_FETCH_EVENT OFF CACHE BOOL "" FORCE)
+    set(ENABLE_BUILTIN_WEB_CRYPTO OFF CACHE BOOL "" FORCE)
+    set(ENABLE_BUILTIN_WEB_FORM_DATA OFF CACHE BOOL "" FORCE)
+    set(ENABLE_BUILTIN_WEB_STREAMS OFF CACHE BOOL "" FORCE)
+    set(ENABLE_BUILTIN_WEB_ABORT OFF CACHE BOOL "" FORCE)
+    set(ENABLE_BUILTIN_WEB_BLOB OFF CACHE BOOL "" FORCE)
+    set(ENABLE_BUILTIN_WEB_FILE OFF CACHE BOOL "" FORCE)
+    set(ENABLE_BUILTIN_WEB_EVENT OFF CACHE BOOL "" FORCE)
+    set(ENABLE_BUILTIN_WEB_STRUCTURED_CLONE OFF CACHE BOOL "" FORCE)
+    set(ENABLE_BUILTIN_WEB_DOM_EXCEPTION OFF CACHE BOOL "" FORCE)
+    set(ENABLE_BUILTIN_WEB_URL OFF CACHE BOOL "" FORCE)
+    set(ENABLE_BUILTIN_WEB_BASE64 OFF CACHE BOOL "" FORCE)
+    set(ENABLE_BUILTIN_WEB_WORKER_LOCATION OFF CACHE BOOL "" FORCE)
+    # Keep ENABLE_BUILTIN_WEB_PERFORMANCE enabled (needed by ComponentizeJS embedding)
+    set(ENABLE_BUILTIN_WPT_SUPPORT OFF CACHE BOOL "" FORCE)
+    set(ENABLE_JS_DEBUGGER OFF CACHE BOOL "" FORCE)
+    # Use size optimization for slim builds
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Oz")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Oz")
+endif()
+
 if (DEFINED ENV{HOST_API})
     set(HOST_API $ENV{HOST_API})
     if (EXISTS ${HOST_API})
@@ -39,7 +67,16 @@ include("wasmtime")
 include("cbindgen")
 
 include("spidermonkey")
-include("openssl")
+
+# OpenSSL is only needed for the crypto builtin
+option(ENABLE_OPENSSL "Build OpenSSL for crypto support" ON)
+if(BUILD_SLIM)
+    set(ENABLE_OPENSSL OFF CACHE BOOL "" FORCE)
+endif()
+if(ENABLE_OPENSSL)
+    include("openssl")
+endif()
+
 include("${HOST_API}/host_api.cmake")
 include("build-crates")
 include("lint")
@@ -75,20 +112,27 @@ target_link_libraries(starling-raw.wasm PRIVATE host_api extension_api builtins 
 
 option(USE_WASM_OPT "use wasm-opt to optimize the StarlingMonkey binary" ON)
 
+# Choose optimization level based on BUILD_SLIM
+if(BUILD_SLIM)
+    set(WASM_OPT_LEVEL "-Oz")
+else()
+    set(WASM_OPT_LEVEL "-O3")
+endif()
+
 # For release builds, use wasm-opt to optimize the generated wasm file.
 if (USE_WASM_OPT)
     if (CMAKE_BUILD_TYPE STREQUAL "Release")
         add_custom_command(
                 TARGET starling-raw.wasm
                 POST_BUILD
-                COMMAND ${WASM_OPT} --strip-debug -O3 -o starling-raw.wasm starling-raw.wasm
+                COMMAND ${WASM_OPT} --strip-debug ${WASM_OPT_LEVEL} -o starling-raw.wasm starling-raw.wasm
                 WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         )
     elseif (CMAKE_BUILD_TYPE STREQUAL "RelWithDebInfo")
         add_custom_command(
                 TARGET starling-raw.wasm
                 POST_BUILD
-                COMMAND ${WASM_OPT} -O3 -g -o starling-raw.wasm starling-raw.wasm
+                COMMAND ${WASM_OPT} ${WASM_OPT_LEVEL} -g -o starling-raw.wasm starling-raw.wasm
                 WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         )
     endif()

@@ -5,7 +5,11 @@ namespace {
 using FpMilliseconds = std::chrono::duration<float, std::chrono::milliseconds::period>;
 } // namespace
 
-
+// Helper for external initialization of timeOrigin (used by ComponentizeJS embedding)
+extern "C" void perf_init_time_origin() {
+  builtins::web::performance::Performance::timeOrigin.emplace(
+      std::chrono::high_resolution_clock::now());
+}
 
 namespace builtins::web::performance {
 
